@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         val genderString = showGenderTextView.text.toString()
 
         //Get new gender string and display the new value in the text view
-        if (genderString.equals("Male")) {
+        if (genderString == getString(R.string.maleGender)) {
             val newGender: String = getString(R.string.femaleGender)
             showGenderTextView.text = newGender
         } else {
