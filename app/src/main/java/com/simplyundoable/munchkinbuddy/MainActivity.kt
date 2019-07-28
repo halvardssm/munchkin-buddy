@@ -1,24 +1,14 @@
 package com.simplyundoable.munchkinbuddy
 
-import android.app.Dialog
-import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
-import android.widget.Toast
-
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-
-
-
-
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -96,28 +86,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /*override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return activity?.let {
-            val builder = AlertDialog.Builder(it)
-            builder.setTitle(R.string.pick_color)
-                .setItems(R.array.colors_array,
-                    DialogInterface.OnClickListener { dialog, which ->
-                        // The 'which' argument contains the index position
-                        // of the selected item
-                    })
-            builder.create()
-        } ?: throw IllegalStateException("Activity cannot be null")
-    }*/
-
-    fun toastMe(view: View) {
-        // val myToast = Toast.makeText(this, message, duration);
-        val myToast = Toast.makeText(this, "Hello Toast!", Toast.LENGTH_SHORT)
-        myToast.show()
-
-
-    }
-
-    fun changeGender (view: View) {
+    fun changeGender(view: View) {
         // Get the text view
         val showGenderTextView = findViewById<TextView>(R.id.genderButton)
 
@@ -134,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun baseIncrement (view: View) {
+    fun baseIncrement(view: View) {
         // Get the text view
         val showBaseTextView = findViewById<TextView>(R.id.baseLevel)
         val showMainTextView = findViewById<TextView>(R.id.mainLevel)
@@ -154,7 +123,7 @@ class MainActivity : AppCompatActivity() {
         showMainTextView.text = levelMain.toString()
     }
 
-    fun baseDecrement (view: View) {
+    fun baseDecrement(view: View) {
         // Get the text view
         val showBaseTextView = findViewById<TextView>(R.id.baseLevel)
         val showMainTextView = findViewById<TextView>(R.id.mainLevel)
@@ -178,7 +147,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun equipIncrement (view: View) {
+    fun equipIncrement(view: View) {
         // Get the text view
         val showEquipTextView = findViewById<TextView>(R.id.equipLevel)
         val showMainTextView = findViewById<TextView>(R.id.mainLevel)
@@ -199,7 +168,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun equipDecrement (view: View) {
+    fun equipDecrement(view: View) {
         // Get the text view
         val showEquipTextView = findViewById<TextView>(R.id.equipLevel)
         val showMainTextView = findViewById<TextView>(R.id.mainLevel)
@@ -222,7 +191,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun moneyIncrement (view: View) {
+    fun moneyIncrement(view: View) {
         // Get the text view
         val showMoneyTextView = findViewById<TextView>(R.id.money)
 
@@ -244,7 +213,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun moneyDecrement (view: View) {
+    fun moneyDecrement(view: View) {
         // Get the text view
         val showMoneyTextView = findViewById<TextView>(R.id.money)
 
@@ -268,7 +237,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun moneyLevelUp (view: View) {
+    fun moneyLevelUp(view: View) {
         // Get the text view
         val showMainTextView = findViewById<TextView>(R.id.mainLevel)
         val showBaseTextView = findViewById<TextView>(R.id.baseLevel)
