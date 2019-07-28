@@ -5,10 +5,14 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import android.view.ViewGroup.MarginLayoutParams
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -263,6 +267,29 @@ class MainActivity : AppCompatActivity() {
             // Code to show element
             val showMoneyLevelUpView = findViewById<TextView>(R.id.moneyLevelUp)
             showMoneyLevelUpView.visibility = View.INVISIBLE
+        }
+    }
+
+    fun raceMunchToggle(view: View) {
+        // Get the text view
+        val showRaceView = findViewById<Spinner>(R.id.raceSecond)
+
+        if (showRaceView.visibility == View.INVISIBLE) {
+            showRaceView.visibility = View.VISIBLE
+        } else {
+            showRaceView.visibility = View.INVISIBLE
+        }
+    }
+
+    fun classMunchToggle(view: View) {
+        // Get the text view
+        val showRaceView = findViewById<Spinner>(R.id.raceSecond)
+        val showClassView = findViewById<Spinner>(R.id.classSecond)
+
+        if (showClassView.visibility == View.INVISIBLE) {
+            showClassView.visibility = View.VISIBLE
+        } else {
+            showClassView.visibility = View.INVISIBLE
         }
     }
 }

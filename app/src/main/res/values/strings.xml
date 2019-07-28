@@ -13,11 +13,8 @@
     <string name="moneyAdd">+100</string>
     <string name="moneySub">-100</string>
 
+    <string name="raceMunch">!</string>
     <string name="playerRace">Race:</string>
-    <string name="raceHuman">Human</string>
-    <string name="raceDwarf">Dwarf</string>
-    <string name="raceElf">Elf</string>
-    <string name="raceHalfling">Halfling</string>
     <string-array name="race_array">
         <item>Human</item>
         <item>Dwarf</item>
@@ -25,6 +22,7 @@
         <item>Halfling</item>
     </string-array>
 
+    <string name="classMunch">!</string>
     <string name="playerClass">Class:</string>
     <string-array name="class_array">
         <item>None</item>
