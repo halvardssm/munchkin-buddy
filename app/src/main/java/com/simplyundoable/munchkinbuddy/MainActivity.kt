@@ -1,295 +1,256 @@
 package com.simplyundoable.munchkinbuddy
 
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import android.view.ViewGroup.MarginLayoutParams
-
-
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+	data class RetrievableTextView(var showTextView: TextView, var counter: Int)
 
-        val raceSpinnerMain: Spinner = findViewById(R.id.raceMain)
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.race_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            raceSpinnerMain.adapter = adapter
-        }
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(R.layout.activity_main)
+		setSupportActionBar(toolbar)
 
-        val raceSpinnerSecond: Spinner = findViewById(R.id.raceSecond)
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.race_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            raceSpinnerSecond.adapter = adapter
-        }
+		val raceSpinnerMain: Spinner = findViewById(R.id.raceMain)
+		// Create an ArrayAdapter using the string array and a default spinner layout
+		ArrayAdapter.createFromResource(
+			this,
+			R.array.race_array,
+			android.R.layout.simple_spinner_item
+		).also { adapter ->
+			// Specify the layout to use when the list of choices appears
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+			// Apply the adapter to the spinner
+			raceSpinnerMain.adapter = adapter
+		}
 
-        val classSpinnerMain: Spinner = findViewById(R.id.classMain)
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.class_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            classSpinnerMain.adapter = adapter
-        }
+		val raceSpinnerSecond: Spinner = findViewById(R.id.raceSecond)
+		// Create an ArrayAdapter using the string array and a default spinner layout
+		ArrayAdapter.createFromResource(
+			this,
+			R.array.race_array,
+			android.R.layout.simple_spinner_item
+		).also { adapter ->
+			// Specify the layout to use when the list of choices appears
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+			// Apply the adapter to the spinner
+			raceSpinnerSecond.adapter = adapter
+		}
 
-        val classSpinnerSecond: Spinner = findViewById(R.id.classSecond)
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.class_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            classSpinnerSecond.adapter = adapter
-        }
-    }
+		val classSpinnerMain: Spinner = findViewById(R.id.classMain)
+		// Create an ArrayAdapter using the string array and a default spinner layout
+		ArrayAdapter.createFromResource(
+			this,
+			R.array.class_array,
+			android.R.layout.simple_spinner_item
+		).also { adapter ->
+			// Specify the layout to use when the list of choices appears
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+			// Apply the adapter to the spinner
+			classSpinnerMain.adapter = adapter
+		}
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+		val classSpinnerSecond: Spinner = findViewById(R.id.classSecond)
+		// Create an ArrayAdapter using the string array and a default spinner layout
+		ArrayAdapter.createFromResource(
+			this,
+			R.array.class_array,
+			android.R.layout.simple_spinner_item
+		).also { adapter ->
+			// Specify the layout to use when the list of choices appears
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+			// Apply the adapter to the spinner
+			classSpinnerSecond.adapter = adapter
+		}
+	}
 
-    fun changeGender(view: View) {
-        // Get the text view
-        val showGenderTextView = findViewById<TextView>(R.id.genderButton)
+	override fun onOptionsItemSelected(item: MenuItem): Boolean {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		return when (item.itemId) {
+			R.id.action_settings -> true
+			else -> super.onOptionsItemSelected(item)
+		}
+	}
 
-        // Get the value of the text view.
-        val genderString = showGenderTextView.text.toString()
+	private fun retrieveIdFromView(view: View): String {
+		val indexOfIdStart = view.toString().indexOf("app:id/") + 7
+		var indexOfIdEnd = view.toString().indexOf(" ", indexOfIdStart)
 
-        //Get new gender string and display the new value in the text view
-        if (genderString == getString(R.string.maleGender)) {
-            val newGender: String = getString(R.string.femaleGender)
-            showGenderTextView.text = newGender
-        } else {
-            val newGender: String = getString(R.string.maleGender)
-            showGenderTextView.text = newGender
-        }
-    }
+		if (indexOfIdEnd == -1) {
+			indexOfIdEnd = view.toString().indexOf("}", indexOfIdStart) - 1
+		}
 
-    fun baseIncrement(view: View) {
-        // Get the text view
-        val showBaseTextView = findViewById<TextView>(R.id.baseLevel)
-        val showMainTextView = findViewById<TextView>(R.id.mainLevel)
+		val viewId: String = view.toString().slice(indexOfIdStart..indexOfIdEnd)
 
-        // Get the value of the text view.
-        val baseString = showBaseTextView.text.toString()
-        val mainString = showMainTextView.text.toString()
+		return viewId
+	}
 
-        // Convert value to a number and increment it
-        var levelBase: Int = Integer.parseInt(baseString)
-        var levelMain: Int = Integer.parseInt(mainString)
-        levelBase++
-        levelMain++
+	fun retrieveTextView(id: Int): RetrievableTextView {
+		val showTextView = findViewById<TextView>(id)
+		val baseString = showTextView.text.toString()
+		val level: Int = Integer.parseInt(baseString)
 
-        // Display the new value in the text view.
-        showBaseTextView.text = levelBase.toString()
-        showMainTextView.text = levelMain.toString()
-    }
+		return RetrievableTextView(showTextView, level)
+	}
 
-    fun baseDecrement(view: View) {
-        // Get the text view
-        val showBaseTextView = findViewById<TextView>(R.id.baseLevel)
-        val showMainTextView = findViewById<TextView>(R.id.mainLevel)
+	fun counterHandler(counterView: TextView, counter: Int) {
+		counterView.text = counter.toString()
+	}
 
-        // Get the value of the text view.
-        val baseString = showBaseTextView.text.toString()
-        val mainString = showMainTextView.text.toString()
+	fun baseHandler(view: View) {
+		val viewId: String = retrieveIdFromView(view)
+		var (showMainTextView, levelMain) = retrieveTextView(R.id.mainLevel)
+		var (showTextView, level) = retrieveTextView(R.id.baseLevel)
 
-        // Convert value to a number and increment it
-        var levelBase: Int = Integer.parseInt(baseString)
-        var levelMain: Int = Integer.parseInt(mainString)
+		if (viewId.indexOf("Add") != -1) {
+			level++
+			levelMain++
 
-        //Check if value is greater than 1
-        if (levelBase > 1) {
-            levelBase--
-            levelMain--
-            // Display the new value in the text view.
-            showBaseTextView.text = levelBase.toString()
-            showMainTextView.text = levelMain.toString()
-        }
+		} else if (viewId.indexOf("Sub") != -1) {
+			if (level > 1) {
+				level--
+				levelMain--
+			}
 
-    }
+		} else {
+			exitProcess(1)
+		}
 
-    fun equipIncrement(view: View) {
-        // Get the text view
-        val showEquipTextView = findViewById<TextView>(R.id.equipLevel)
-        val showMainTextView = findViewById<TextView>(R.id.mainLevel)
+		counterHandler(showTextView, level)
+		counterHandler(showMainTextView, levelMain)
+	}
 
-        // Get the value of the text view.
-        val equipString = showEquipTextView.text.toString()
-        val mainString = showMainTextView.text.toString()
+	fun equipmentHandler(view: View) {
+		val viewId: String = retrieveIdFromView(view)
+		var (showMainTextView, levelMain) = retrieveTextView(R.id.mainLevel)
+		var (showTextView, level) = retrieveTextView(R.id.equipLevel)
 
-        // Convert value to a number and increment it
-        var levelEquip: Int = Integer.parseInt(equipString)
-        var levelMain: Int = Integer.parseInt(mainString)
-        levelEquip++
-        levelMain++
+		if (viewId.indexOf("Add") != -1) {
+			level++
+			levelMain++
 
-        // Display the new value in the text view.
-        showEquipTextView.text = levelEquip.toString()
-        showMainTextView.text = levelMain.toString()
+		} else if (viewId.indexOf("Sub") != -1) {
+			if (level > 0) {
+				level--
+				levelMain--
+			}
 
-    }
+		} else {
+			exitProcess(1)
+		}
 
-    fun equipDecrement(view: View) {
-        // Get the text view
-        val showEquipTextView = findViewById<TextView>(R.id.equipLevel)
-        val showMainTextView = findViewById<TextView>(R.id.mainLevel)
+		counterHandler(showTextView, level)
+		counterHandler(showMainTextView, levelMain)
+	}
 
-        // Get the value of the text view.
-        val equipString = showEquipTextView.text.toString()
-        val mainString = showMainTextView.text.toString()
+	fun moneyHandler(view: View) {
+		val viewId: String = retrieveIdFromView(view)
+		var (showTextView, level) = retrieveTextView(R.id.money)
+		val showMoneyLevelUpView = findViewById<TextView>(R.id.moneyLevelUp)
 
-        // Convert value to a number and increment it
-        var levelEquip: Int = Integer.parseInt(equipString)
-        var levelMain: Int = Integer.parseInt(mainString)
+		if (viewId.indexOf("Add") != -1) {
+			level += 100
 
-        //Check if value is greater than 0
-        if (levelEquip > 0) {
-            levelEquip--
-            levelMain--
-            // Display the new value in the text view.
-            showEquipTextView.text = levelEquip.toString()
-            showMainTextView.text = levelMain.toString()
-        }
-    }
+		} else if (viewId.indexOf("Sub") != -1) {
+			if (level >= 100) {
+				level -= 100
+			}
 
-    fun moneyIncrement(view: View) {
-        // Get the text view
-        val showMoneyTextView = findViewById<TextView>(R.id.money)
+		} else {
+			exitProcess(1)
+		}
 
-        // Get the value of the text view.
-        val moneyString = showMoneyTextView.text.toString()
+		if (level >= 1000) {
+			showMoneyLevelUpView.visibility = View.VISIBLE
+		} else {
+			showMoneyLevelUpView.visibility = View.INVISIBLE
+		}
 
-        // Convert value to a number and increment it
-        var levelMoney: Int = Integer.parseInt(moneyString)
+		counterHandler(showTextView, level)
+	}
 
-        levelMoney += 100
+	fun moneyLevelUp(view: View) {
+		// Get the text view
+		val showMainTextView = findViewById<TextView>(R.id.mainLevel)
+		val showBaseTextView = findViewById<TextView>(R.id.baseLevel)
+		val showMoneyTextView = findViewById<TextView>(R.id.money)
 
-        if (levelMoney >= 1000) {
-            // Code to show element
-            val showMoneyLevelUpView = findViewById<TextView>(R.id.moneyLevelUp)
-            showMoneyLevelUpView.visibility = View.VISIBLE
-        }
-        // Display the new value in the text view.
-        showMoneyTextView.text = levelMoney.toString()
+		// Get the value of the text view.
+		val moneyString = showMoneyTextView.text.toString()
+		val mainString = showMainTextView.text.toString()
+		val baseString = showBaseTextView.text.toString()
 
-    }
+		// Convert value to a number and increment it
+		var levelMoney: Int = Integer.parseInt(moneyString)
+		var levelMain: Int = Integer.parseInt(mainString)
+		var levelBase: Int = Integer.parseInt(baseString)
 
-    fun moneyDecrement(view: View) {
-        // Get the text view
-        val showMoneyTextView = findViewById<TextView>(R.id.money)
+		//Check if value is greater than 1000
+		if (levelMoney >= 1000) {
+			levelMoney -= 1000
+			levelBase++
+			levelMain++
 
-        // Get the value of the text view.
-        val moneyString = showMoneyTextView.text.toString()
+			// Display the new value in the text view
+			showMoneyTextView.text = levelMoney.toString()
+			showBaseTextView.text = levelBase.toString()
+			showMainTextView.text = levelMain.toString()
+		}
 
-        // Convert value to a number and increment it
-        var levelMoney: Int = Integer.parseInt(moneyString)
-        //Check if value is greater than 0
-        if (levelMoney >= 100) {
-            levelMoney -= 100
+		if (levelMoney < 1000) {
+			// Code to show element
+			val showMoneyLevelUpView = findViewById<TextView>(R.id.moneyLevelUp)
+			showMoneyLevelUpView.visibility = View.INVISIBLE
+		}
+	}
 
-            // Display the new value in the text view
-            showMoneyTextView.text = levelMoney.toString()
-        }
+	fun changeGender(view: View) {
+		// Get the text view
+		val showGenderTextView = findViewById<TextView>(R.id.genderButton)
 
-        if (levelMoney < 1000) {
-            // Code to show element
-            val showMoneyLevelUpView = findViewById<TextView>(R.id.moneyLevelUp)
-            showMoneyLevelUpView.visibility = View.INVISIBLE
-        }
-    }
+		// Get the value of the text view.
+		val genderString = showGenderTextView.text.toString()
 
-    fun moneyLevelUp(view: View) {
-        // Get the text view
-        val showMainTextView = findViewById<TextView>(R.id.mainLevel)
-        val showBaseTextView = findViewById<TextView>(R.id.baseLevel)
-        val showMoneyTextView = findViewById<TextView>(R.id.money)
+		//Get new gender string and display the new value in the text view
+		if (genderString == getString(R.string.maleGender)) {
+			val newGender: String = getString(R.string.femaleGender)
+			showGenderTextView.text = newGender
+		} else {
+			val newGender: String = getString(R.string.maleGender)
+			showGenderTextView.text = newGender
+		}
+	}
 
-        // Get the value of the text view.
-        val moneyString = showMoneyTextView.text.toString()
-        val mainString = showMainTextView.text.toString()
-        val baseString = showBaseTextView.text.toString()
+	fun raceMunchToggle(view: View) {
+		// Get the text view
+		val showRaceView = findViewById<Spinner>(R.id.raceSecond)
 
-        // Convert value to a number and increment it
-        var levelMoney: Int = Integer.parseInt(moneyString)
-        var levelMain: Int = Integer.parseInt(mainString)
-        var levelBase: Int = Integer.parseInt(baseString)
+		if (showRaceView.visibility == View.INVISIBLE) {
+			showRaceView.visibility = View.VISIBLE
+		} else {
+			showRaceView.visibility = View.INVISIBLE
+		}
+	}
 
-        //Check if value is greater than 1000
-        if (levelMoney >= 1000) {
-            levelMoney -= 1000
-            levelBase++
-            levelMain++
+	fun classMunchToggle(view: View) {
+		// Get the text view
+		val showRaceView = findViewById<Spinner>(R.id.raceSecond)
+		val showClassView = findViewById<Spinner>(R.id.classSecond)
 
-            // Display the new value in the text view
-            showMoneyTextView.text = levelMoney.toString()
-            showBaseTextView.text = levelBase.toString()
-            showMainTextView.text = levelMain.toString()
-        }
-
-        if (levelMoney < 1000) {
-            // Code to show element
-            val showMoneyLevelUpView = findViewById<TextView>(R.id.moneyLevelUp)
-            showMoneyLevelUpView.visibility = View.INVISIBLE
-        }
-    }
-
-    fun raceMunchToggle(view: View) {
-        // Get the text view
-        val showRaceView = findViewById<Spinner>(R.id.raceSecond)
-
-        if (showRaceView.visibility == View.INVISIBLE) {
-            showRaceView.visibility = View.VISIBLE
-        } else {
-            showRaceView.visibility = View.INVISIBLE
-        }
-    }
-
-    fun classMunchToggle(view: View) {
-        // Get the text view
-        val showRaceView = findViewById<Spinner>(R.id.raceSecond)
-        val showClassView = findViewById<Spinner>(R.id.classSecond)
-
-        if (showClassView.visibility == View.INVISIBLE) {
-            showClassView.visibility = View.VISIBLE
-        } else {
-            showClassView.visibility = View.INVISIBLE
-        }
-    }
+		if (showClassView.visibility == View.INVISIBLE) {
+			showClassView.visibility = View.VISIBLE
+		} else {
+			showClassView.visibility = View.INVISIBLE
+		}
+	}
 }
