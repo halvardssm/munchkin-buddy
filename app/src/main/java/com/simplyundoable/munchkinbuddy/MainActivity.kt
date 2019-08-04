@@ -155,6 +155,105 @@ class MainActivity : AppCompatActivity() {
 		counterView.text = counter.toString()
 	}
 
+	private fun menuDice() {
+		val newFragment = DiceDialogFragment()
+		newFragment.show(supportFragmentManager, "dice")
+		val diceImageView: ImageView = diceDialog.findViewById(R.id.diceImage) // this line of code crashes the app
+		val drawableRes = when (Random.nextInt(1, 6)) {
+			1 -> R.drawable.dice1
+			else -> R.drawable.dice2
+		}
+
+		diceImageView.setImageResource(drawableRes)
+	}
+
+	private fun menuReset(view: View) {
+		val showBaseTextView = findViewById<TextView>(R.id.baseLevel)
+		val baseString = showBaseTextView.text.toString()
+		var levelBase: Int = Integer.parseInt(baseString)
+		baseLevelStore = levelBase
+		levelBase = 1
+		showBaseTextView.text = levelBase.toString()
+		val showMainTextView = findViewById<TextView>(R.id.mainLevel)
+		showMainTextView.text = levelBase.toString()
+
+		val showEquipTextView = findViewById<TextView>(R.id.equipLevel)
+		val equipString = showEquipTextView.text.toString()
+		var levelEquip: Int = Integer.parseInt(equipString)
+		equipLevelStore = levelEquip
+		levelEquip = 0
+		showEquipTextView.text = levelEquip.toString()
+
+		val showMoneyTextView = findViewById<TextView>(R.id.money)
+		val moneyString = showMoneyTextView.text.toString()
+		var levelMoney: Int = Integer.parseInt(moneyString)
+		moneyLevelStore = levelMoney
+		levelMoney = 0
+		showMoneyTextView.text = levelMoney.toString()
+
+		val showMoneyLevelUpTextView = findViewById<TextView>(R.id.moneyLevelUp)
+		showMoneyLevelUpTextView.visibility = View.INVISIBLE
+
+		val showRace1Spinner = findViewById<Spinner>(R.id.raceMain)
+		race1Store = showRace1Spinner.selectedItemPosition
+		showRace1Spinner.setSelection(0)
+
+		val showRace2Spinner = findViewById<Spinner>(R.id.raceSecond)
+		race2Store = showRace2Spinner.selectedItemPosition
+		showRace2Spinner.setSelection(0)
+		showRace2Spinner.visibility = View.INVISIBLE
+
+		val showClass1Spinner = findViewById<Spinner>(R.id.classMain)
+		class1Store = showClass1Spinner.selectedItemPosition
+		showClass1Spinner.setSelection(0)
+
+		val showClass2Spinner = findViewById<Spinner>(R.id.classSecond)
+		class2Store = showClass2Spinner.selectedItemPosition
+		showClass2Spinner.setSelection(0)
+		showClass2Spinner.visibility = View.INVISIBLE
+
+		Snackbar.make(mainActivityView, getString(R.string.action_resetMessage), Snackbar.LENGTH_LONG)
+			.setAction(getString(R.string.action_resetUndo)) {
+				resetUndo()
+			}.show()
+	}
+
+	private fun resetUndo() {
+		val showBaseTextView = findViewById<TextView>(R.id.baseLevel)
+		showBaseTextView.text = baseLevelStore.toString()
+
+		val showEquipTextView = findViewById<TextView>(R.id.equipLevel)
+		showEquipTextView.text = equipLevelStore.toString()
+
+		val showMainTextView = findViewById<TextView>(R.id.mainLevel)
+		val mainTotal = baseLevelStore + equipLevelStore
+		showMainTextView.text = mainTotal.toString()
+
+		val showMoneyTextView = findViewById<TextView>(R.id.money)
+		showMoneyTextView.text = moneyLevelStore.toString()
+		val showMoneyLevelUpView = findViewById<TextView>(R.id.moneyLevelUp)
+		if (moneyLevelStore >= 1000) {
+			showMoneyLevelUpView.visibility = View.VISIBLE
+		} else {
+			showMoneyLevelUpView.visibility = View.INVISIBLE
+		}
+
+		val showRace1Spinner = findViewById<Spinner>(R.id.raceMain)
+		showRace1Spinner.setSelection(race1Store)
+
+		val showRace2Spinner = findViewById<Spinner>(R.id.raceSecond)
+		showRace2Spinner.setSelection(race2Store)
+
+		val showClass1Spinner = findViewById<Spinner>(R.id.classMain)
+		showClass1Spinner.setSelection(class1Store)
+
+		val showClass2Spinner = findViewById<Spinner>(R.id.classSecond)
+		showClass2Spinner.setSelection(class2Store)
+
+		val snackbar = Snackbar.make(mainActivityView, getString(R.string.action_resetUndoMessage), LENGTH_LONG)
+		snackbar.show()
+	}
+
 	fun baseHandler(view: View) {
 		val viewId: String = retrieveIdFromView(view)
 		var (showMainTextView, levelMain) = retrieveTextView(R.id.mainLevel)
@@ -289,104 +388,5 @@ class MainActivity : AppCompatActivity() {
 		} else {
 			showClassView.visibility = View.INVISIBLE
 		}
-	}
-
-	private fun menuDice() {
-		val newFragment = DiceDialogFragment()
-		newFragment.show(supportFragmentManager, "dice")
-		val diceImageView: ImageView = diceDialog.findViewById(R.id.diceImage) // this line of code crashes the app
-		val drawableRes = when (Random.nextInt(1, 6)) {
-			1 -> R.drawable.dice1
-			else -> R.drawable.dice2
-		}
-
-		diceImageView.setImageResource(drawableRes)
-	}
-
-	fun menuReset(v: View) {
-		val showBaseTextView = findViewById<TextView>(R.id.baseLevel)
-		val baseString = showBaseTextView.text.toString()
-		var levelBase: Int = Integer.parseInt(baseString)
-		baseLevelStore = levelBase
-		levelBase = 1
-		showBaseTextView.text = levelBase.toString()
-		val showMainTextView = findViewById<TextView>(R.id.mainLevel)
-		showMainTextView.text = levelBase.toString()
-
-		val showEquipTextView = findViewById<TextView>(R.id.equipLevel)
-		val equipString = showEquipTextView.text.toString()
-		var levelEquip: Int = Integer.parseInt(equipString)
-		equipLevelStore = levelEquip
-		levelEquip = 0
-		showEquipTextView.text = levelEquip.toString()
-
-		val showMoneyTextView = findViewById<TextView>(R.id.money)
-		val moneyString = showMoneyTextView.text.toString()
-		var levelMoney: Int = Integer.parseInt(moneyString)
-		moneyLevelStore = levelMoney
-		levelMoney = 0
-		showMoneyTextView.text = levelMoney.toString()
-
-		val showMoneyLevelUpTextView = findViewById<TextView>(R.id.moneyLevelUp)
-		showMoneyLevelUpTextView.visibility = View.INVISIBLE
-
-		val showRace1Spinner = findViewById<Spinner>(R.id.raceMain)
-		race1Store = showRace1Spinner.selectedItemPosition
-		showRace1Spinner.setSelection(0)
-
-		val showRace2Spinner = findViewById<Spinner>(R.id.raceSecond)
-		race2Store = showRace2Spinner.selectedItemPosition
-		showRace2Spinner.setSelection(0)
-		showRace2Spinner.visibility = View.INVISIBLE
-
-		val showClass1Spinner = findViewById<Spinner>(R.id.classMain)
-		class1Store = showClass1Spinner.selectedItemPosition
-		showClass1Spinner.setSelection(0)
-
-		val showClass2Spinner = findViewById<Spinner>(R.id.classSecond)
-		class2Store = showClass2Spinner.selectedItemPosition
-		showClass2Spinner.setSelection(0)
-		showClass2Spinner.visibility = View.INVISIBLE
-
-		Snackbar.make(mainActivityView, getString(R.string.action_resetMessage), Snackbar.LENGTH_LONG)
-			.setAction(getString(R.string.action_resetUndo)) {
-				resetUndo()
-			}.show()
-	}
-
-	private fun resetUndo() {
-		val showBaseTextView = findViewById<TextView>(R.id.baseLevel)
-		showBaseTextView.text = baseLevelStore.toString()
-
-		val showEquipTextView = findViewById<TextView>(R.id.equipLevel)
-		showEquipTextView.text = equipLevelStore.toString()
-
-		val showMainTextView = findViewById<TextView>(R.id.mainLevel)
-		val mainTotal = baseLevelStore + equipLevelStore
-		showMainTextView.text = mainTotal.toString()
-
-		val showMoneyTextView = findViewById<TextView>(R.id.money)
-		showMoneyTextView.text = moneyLevelStore.toString()
-		val showMoneyLevelUpView = findViewById<TextView>(R.id.moneyLevelUp)
-		if (moneyLevelStore >= 1000) {
-			showMoneyLevelUpView.visibility = View.VISIBLE
-		} else {
-			showMoneyLevelUpView.visibility = View.INVISIBLE
-		}
-
-		val showRace1Spinner = findViewById<Spinner>(R.id.raceMain)
-		showRace1Spinner.setSelection(race1Store)
-
-		val showRace2Spinner = findViewById<Spinner>(R.id.raceSecond)
-		showRace2Spinner.setSelection(race2Store)
-
-		val showClass1Spinner = findViewById<Spinner>(R.id.classMain)
-		showClass1Spinner.setSelection(class1Store)
-
-		val showClass2Spinner = findViewById<Spinner>(R.id.classSecond)
-		showClass2Spinner.setSelection(class2Store)
-
-		val snackbar = Snackbar.make(mainActivityView, getString(R.string.action_resetUndoMessage), LENGTH_LONG)
-		snackbar.show()
 	}
 }
