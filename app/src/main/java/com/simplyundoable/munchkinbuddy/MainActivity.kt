@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 		return viewId
 	}
 
-	fun retrieveTextView(id: Int): RetrievableTextView {
+	private fun retrieveTextView(id: Int): RetrievableTextView {
 		val showTextView = findViewById<TextView>(id)
 		val baseString = showTextView.text.toString()
 		val level: Int = Integer.parseInt(baseString)
@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
 		return RetrievableTextView(showTextView, level)
 	}
 
-	fun counterHandler(counterView: TextView, counter: Int) {
+	private fun counterHandler(counterView: TextView, counter: Int) {
 		counterView.text = counter.toString()
 	}
 
@@ -181,33 +181,23 @@ class MainActivity : AppCompatActivity() {
 
 	fun moneyLevelUp(view: View) {
 		// Get the text view
-		val showMainTextView = findViewById<TextView>(R.id.mainLevel)
-		val showBaseTextView = findViewById<TextView>(R.id.baseLevel)
-		val showMoneyTextView = findViewById<TextView>(R.id.money)
-
-		// Get the value of the text view.
-		val moneyString = showMoneyTextView.text.toString()
-		val mainString = showMainTextView.text.toString()
-		val baseString = showBaseTextView.text.toString()
-
-		// Convert value to a number and increment it
-		var levelMoney: Int = Integer.parseInt(moneyString)
-		var levelMain: Int = Integer.parseInt(mainString)
-		var levelBase: Int = Integer.parseInt(baseString)
+		var (mainView, mainLevel) = retrieveTextView(R.id.mainLevel)
+		var (baseView, baseLevel) = retrieveTextView(R.id.baseLevel)
+		var (moneyView, moneyLevel) = retrieveTextView(R.id.money)
 
 		//Check if value is greater than 1000
-		if (levelMoney >= 1000) {
-			levelMoney -= 1000
-			levelBase++
-			levelMain++
+		if (moneyLevel >= 1000) {
+			moneyLevel -= 1000
+			baseLevel++
+			mainLevel++
 
 			// Display the new value in the text view
-			showMoneyTextView.text = levelMoney.toString()
-			showBaseTextView.text = levelBase.toString()
-			showMainTextView.text = levelMain.toString()
+			counterHandler(moneyView, moneyLevel)
+			counterHandler(baseView, baseLevel)
+			counterHandler(mainView, mainLevel)
 		}
 
-		if (levelMoney < 1000) {
+		if (moneyLevel < 1000) {
 			// Code to show element
 			val showMoneyLevelUpView = findViewById<TextView>(R.id.moneyLevelUp)
 			showMoneyLevelUpView.visibility = View.INVISIBLE
@@ -244,7 +234,6 @@ class MainActivity : AppCompatActivity() {
 
 	fun classMunchToggle(view: View) {
 		// Get the text view
-		val showRaceView = findViewById<Spinner>(R.id.raceSecond)
 		val showClassView = findViewById<Spinner>(R.id.classSecond)
 
 		if (showClassView.visibility == View.INVISIBLE) {
