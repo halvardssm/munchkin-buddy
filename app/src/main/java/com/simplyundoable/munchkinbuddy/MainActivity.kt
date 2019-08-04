@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
+import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.dialog_dice.*
@@ -24,10 +25,12 @@ class DiceDialogFragment : DialogFragment() {
             // Get the layout inflater
             val inflater = requireActivity().layoutInflater
             // Pass null as the parent view because its going in the dialog layout
-            builder.setView(inflater.inflate(R.layout.dialog_dice, null))
-            builder.create()
-        } ?: throw IllegalStateException("Activity cannot be null")
+            builder.run {
+                setView(inflater.inflate(R.layout.dialog_dice, null))
+                create()
+            }
 
+        } ?: throw IllegalStateException("Activity cannot be null")
     }
 }
 
@@ -334,13 +337,13 @@ class MainActivity : AppCompatActivity() {
     fun menuDice() {
         val newFragment = DiceDialogFragment()
         newFragment.show(supportFragmentManager, "dice")
-        val diceImageView = diceDialog.findViewById<ImageView>(R.id.diceImage) as ImageView // this line of code crashes the app
+        val diceImageView: ImageView = diceDialog.findViewById(R.id.diceImage) // this line of code crashes the app
         val drawableRes = when(Random.nextInt(1, 6)){
             1 -> R.drawable.dice1
             else -> R.drawable.dice2
         }
-        diceImageView.setImageResource(drawableRes)
 
+        diceImageView.setImageResource(drawableRes)
     }
 
     fun menuReset(v: View) {
