@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Munchkin Buddy</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_reset">Reset</string>
+    <string name="action_resetMessage">Reset scores</string>
+    <string name="action_resetUndo">Undo</string>
+    <string name="action_resetUndoMessage">Rolled back scores</string>
+    <string name="action_dice">Dice</string>
 
     <string name="gender">Gender:</string>
     <string name="newGender">Change</string>
@@ -13,11 +17,8 @@
     <string name="moneyAdd">+100</string>
     <string name="moneySub">-100</string>
 
+    <string name="raceMunch">!</string>
     <string name="playerRace">Race:</string>
-    <string name="raceHuman">Human</string>
-    <string name="raceDwarf">Dwarf</string>
-    <string name="raceElf">Elf</string>
-    <string name="raceHalfling">Halfling</string>
     <string-array name="race_array">
         <item>Human</item>
         <item>Dwarf</item>
@@ -25,6 +26,7 @@
         <item>Halfling</item>
     </string-array>
 
+    <string name="classMunch">!</string>
     <string name="playerClass">Class:</string>
     <string-array name="class_array">
         <item>None</item>
